@@ -1,6 +1,7 @@
 import React, { Children, useState } from 'react';
 import axios from 'axios';
 import useTrait from '../../../hooks/useTrait';
+import { ClipLoader } from 'react-spinners';
 
 const InvoiceModal = ({ openModal, closeModal, onAddProductItem }) => {
     const [newProduct, setNewProduct] = useState({
@@ -13,6 +14,7 @@ const InvoiceModal = ({ openModal, closeModal, onAddProductItem }) => {
 
     const setUnits = useTrait(0);
     const setUnitPrice = useTrait(0);
+    const [loading, setLoading] = useState(false);
 
     const handleNewProductChange = (field, value) => {
 
@@ -45,7 +47,7 @@ const InvoiceModal = ({ openModal, closeModal, onAddProductItem }) => {
     const saveProduct = async () => {
 
         try {
-
+            setLoading(true);
             const response = await axios.post('/api/add-data', {
                 productData: newProduct,
             });
@@ -64,6 +66,9 @@ const InvoiceModal = ({ openModal, closeModal, onAddProductItem }) => {
             closeModal();
         } catch (error) {
             console.error('Error calculating GST:', error);
+        }
+        finally {
+            setLoading(false);
         }
     };
 
@@ -160,7 +165,11 @@ const InvoiceModal = ({ openModal, closeModal, onAddProductItem }) => {
                             className="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded shadow-sm"
                             onClick={saveProduct}
                         >
-                            Add Item
+                            {loading ? (
+                                <ClipLoader color="#fff" loading={loading} size={20} />
+                            ) : (
+                                'Add Item'
+                            )}
                         </button>
                     </div>
                 </div>
