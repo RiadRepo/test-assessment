@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@media print {
+
+    /* input {
+      display: none !important;
+    } */
+    /* input::placeholder {
+        color: transparent !important;
+    }
+
+    button {
+        display: none;
+    }
+
+    noPrint {
+        display: none;
+    }
+
+    invoice {
+        padding-right: 0;
+    } */
+}
